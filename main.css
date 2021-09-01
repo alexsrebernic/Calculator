@@ -87,6 +87,8 @@ body #container #calculator #showNumbers {
 }
 
 body #container #calculator #showNumbers #para {
+  max-width: 70%;
+  font-size: 16px;
   height: 40px;
   display: -webkit-box;
   display: -ms-flexbox;
