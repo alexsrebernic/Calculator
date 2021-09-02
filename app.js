@@ -11,6 +11,8 @@ const operators = document.querySelectorAll(".operator")
 const undo = document.querySelector("#undo")
 const escapeButton = document.querySelector("#escape")
 
+
+coma.onclick = () => displayCalculate()
 undo.onclick = () =>  deleteChar()
 escapeButton.onclick = () => clearDisplayNumber()
 window.addEventListener("keydown",handleKeyboardInput)
@@ -23,7 +25,7 @@ operators.forEach(function(operator){
 
 function handleKeyboardInput(e) {
     if (e.key >= 0 && e.key <= 9) displayCalculate(e.key)
-    if (e.key === '.') displayCalculate()
+    if (e.key === ',') displayCalculate()
     if (e.key === '=' || e.key === 'Enter') evaluate()
     if (e.key === 'Backspace') deleteChar()
     if (e.key === 'Escape') displayCalculate()
@@ -38,14 +40,15 @@ function handleKeyboardInput(e) {
   }
 
 
-
-
-
   
 
 function displayCalculate(value){  
+      if (value === "χ²"){
+       value = "^2"
+    }
     makePara(p)
     addChars(value)
+  
    
 }
 function makePara (para){
@@ -59,22 +62,18 @@ function makePara (para){
 function addChars (value){
     if (p.textContent.length < 33){
        toString(para.textContent += value)
-       if(value = "." && p.textContent.includes(".")) return
-       switch(value){
-        case value == "÷" && p.textContent.includes("÷"),
-        value == "+" && p.textContent.includes("+"),
-        value == "−" && p.textContent.includes("−"),
-        value == "×" && p.textContent.includes("×"),
-        value == "χ²" && p.textContent.includes("χ²"),
-        value == "√()" && p.textContent.includes("√()"):
-        return
+
     }
-    }
+    
     limitNumbers(para)
 }
 
 function deleteChar(){
     let para = p.innerHTML
+    if(para.slice(-2) == "^2"){
+       
+        p.textContent = para.slice(0, -2)
+    }
     p.textContent = para.slice(0,-1)
     limitNumbers(p)    
 }
