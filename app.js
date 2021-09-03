@@ -2,7 +2,7 @@ const displayNumbers = document.querySelector("#showNumbers");
 const displayResult = document.querySelector("#result");
 const p = document.getElementById("para")
 let span = document.getElementById("span")
-
+let pTextContent = p.textContent.length
 const equal = document.querySelector(".equal")
 const parentesis = document.querySelectorAll(".parentesis")
 const coma = document.querySelector(".coma")
@@ -10,17 +10,16 @@ const numbers = document.querySelectorAll(".number")
 const operators = document.querySelectorAll(".operator")
 const undo = document.querySelector("#undo")
 const escapeButton = document.querySelector("#escape")
-
-
+console.log(operators)
 coma.onclick = () => displayCalculate()
 undo.onclick = () =>  deleteChar()
 escapeButton.onclick = () => clearDisplayNumber()
 window.addEventListener("keydown",handleKeyboardInput)
 numbers.forEach(function(number){
-    number.onclick = () => displayCalculate(number.textContent)
+    number.onclick = () => displayCalculate(number)
 })
 operators.forEach(function(operator){
-    operator.onclick = () => displayCalculate(operator.textContent)
+    operator.onclick = () => displayCalculate(operator)
 })
 
 function handleKeyboardInput(e) {
@@ -43,14 +42,22 @@ function handleKeyboardInput(e) {
   
 
 function displayCalculate(value){  
-      if (value === "χ²"){
-       value = "^2"
-    }
+    if (value.textContent === "χ²"){
+        value.textContent = "^2"
+     }
+     if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "+")  return
+     if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "−")  return
+     if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "×")  return
+     if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "÷")  return
+     if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "√()")  return
+     if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "^2")  return
+
+
     makePara(p)
-    addChars(value)
-  
-   
+    addChars(value)  
+    
 }
+
 function makePara (para){
     if (displayNumbers.innerHTML == ""){   
         displayNumbers.appendChild(para)
@@ -61,10 +68,14 @@ function makePara (para){
 
 function addChars (value){
     if (p.textContent.length < 33){
-       toString(para.textContent += value)
+        if(value.className == "operator" && p.textContent == "") {
+            return
+        } else {
+            toString(para.textContent += value.textContent)
+        }
 
-    }
-    
+       
+    } 
     limitNumbers(para)
 }
 
