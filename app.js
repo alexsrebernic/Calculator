@@ -38,64 +38,52 @@ function handleKeyboardInput(e) {
   }
 
 function displayCalculate(value){  
-checkIfHasParentesis()
-
-    if(checkOperators(value)) return
-    makeParagraph()
-    addChars(value)  
-    
-}
-function checkIfHasParentesis(value){
-    if(p.textContent.includes("()")){
-        console.log("ASD")
-      let indexOfParentesis = p.textContent.indexOf("(")
-      let hasOpenParentesis = true
-      p.textContent[indexOfParentesis]
+    if(checkOperatorsAndParentesis(value)){
+        return
+    } else {
+        addChar(value)  
     }
 }
 
-function checkOperators(value){
+
+
+  
+function checkOperatorsAndParentesis(value){
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "+")  return true
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "-")  return true
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "*")  return true
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "/")  return true
-     if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "(")  return true
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "%")  return true
-     if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == ")")  return true
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 2) == "**")  return true
+     if(value.className == "parentesis" && p.textContent.substring(p.textContent.length - 1) == "(")  return true
+     if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == ")")  return true
+     if(value.textContent == "**" && p.textContent.substring(p.textContent.length - 1) == "(")  return true
+     if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == "(")  return false
+
 }
 
-function makeParagraph (){
-    if (displayNumbers.innerHTML == ""){   
-        displayNumbers.appendChild(p)
-       p.style.height = "20px"
-       p.style.width = "95%"      
-    }
-}
 
-function addChars (value){
+
+function addChar(value){
     if (p.textContent.length < 33){
         checkChars(value)
-        putLimitNumbers(para)
+        putLimitNumbers()
      }
     } 
+   
 
+   
 function checkChars (value){
-    if (value.textContent == "("){
-        return toString(para.textContent += "()")
-     }
-     if(value.textContent == ")"){
-
-     }
-     if(value.className == "operator" && p.textContent == "") {
+    if(value.className == "operator" && p.textContent == "" || value.textContent == ")" && p.textContent == ("")) {
          return
      } else {
          toString(para.textContent += value.textContent)
      }
 }
+
 function deleteChar(){
     checkCharsOfString()
-    putLimitNumbers(p)    
+    putLimitNumbers()    
 }
 
 function checkCharsOfString(){
@@ -105,22 +93,14 @@ function checkCharsOfString(){
         p.textContent = p.textContent.slice(0,-1)
         }
 }
-
-function clearDisplayNumber(){
-    p.textContent = ""
-   span.style.display = "none"
-}
-
-function putLimitNumbers(p){
+function putLimitNumbers(){
     if(p.textContent.length >= 33){
         span.style.display = "block"
     } else if (p.textContent.length < 33){
         span.style.display = "none"
     }
 }
-
-
-
-
-
-
+function clearDisplayNumber(){
+    p.textContent = ""
+   span.style.display = "none"
+}
