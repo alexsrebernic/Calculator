@@ -45,9 +45,6 @@ function displayCalculate(value){
     }
 }
 
-
-
-  
 function checkOperatorsAndParentesis(value){
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "+")  return true
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "-")  return true
@@ -58,10 +55,8 @@ function checkOperatorsAndParentesis(value){
      if(value.className == "parentesis" && p.textContent.substring(p.textContent.length - 1) == "(")  return true
      if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == ")")  return true
      if(value.textContent == "**" && p.textContent.substring(p.textContent.length - 1) == "(")  return true
-     if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == "(")  return false
-
+     if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == "(")  return false    
 }
-
 
 
 function addChar(value){
@@ -71,9 +66,24 @@ function addChar(value){
      }
     } 
    
+    let numberOfParentesisOpen = 0;
+    let numberOfParentesisClosed = 0;
 
    
 function checkChars (value){
+    if (value.textContent == "("){
+        numberOfParentesisOpen += 1;
+        console.log(numberOfParentesisOpen)
+    }
+    if (value.textContent == ")"){
+        console.log("asd")
+        if(numberOfParentesisOpen > numberOfParentesisClosed){
+         numberOfParentesisClosed += 1;
+        return toString(para.textContent += value.textContent)
+        } else {
+            return
+        }
+    }
     if(value.className == "operator" && p.textContent == "" || value.textContent == ")" && p.textContent == ("")) {
          return
      } else {
