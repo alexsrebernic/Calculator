@@ -12,7 +12,7 @@ const operators = document.querySelectorAll(".operator")
 const undo = document.querySelector("#undo")
 const escapeButton = document.querySelector("#escape")
 
-equal.onclick = () => 
+equal.onclick = () => console.log(p.textContent)
 coma.onclick = () => displayCalculate(coma)
 undo.onclick = () =>  deleteChar()
 escapeButton.onclick = () => clearDisplayNumber()
@@ -23,6 +23,7 @@ parentesis.forEach(function(parentesis){
 numbers.forEach(function(number){
     number.onclick = () => displayCalculate(number)
 })
+
 operators.forEach(function(operator){
     operator.onclick = () => displayCalculate(operator)
 })
@@ -53,7 +54,6 @@ function checkOperatorsAndParentesis(value){
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "%")  return true
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 2) == "**")  return true
      if(value.className == "parentesis" && p.textContent.substring(p.textContent.length - 1) == "(")  return true
-     if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == ")")  return true
      if(value.textContent == "**" && p.textContent.substring(p.textContent.length - 1) == "(")  return true
      if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == "(")  return false    
 }
@@ -71,24 +71,49 @@ function addChar(value){
 
    
 function checkChars (value){
+    if (value.textContent === "(" || value.textContent === ")"){
+     return checkParentesis(value)
+    }
+    if(value.className == "operator" && p.textContent == "" || value.textContent == ")" && p.textContent == ("")) {
+         return
+     } else if(value.className == "number" && p.textContent.substring(p.textContent.length - 1) == ")"){
+        return toString(p.textContent += "*" + value.textContent)
+     } else {
+        toString(p.textContent +=  value.textContent)
+     }
+}
+function checkParentesis(value){
     if (value.textContent == "("){
         numberOfParentesisOpen += 1;
-        console.log(numberOfParentesisOpen)
+        return checkIfHasNumber()
     }
     if (value.textContent == ")"){
-        console.log("asd")
         if(numberOfParentesisOpen > numberOfParentesisClosed){
          numberOfParentesisClosed += 1;
-        return toString(para.textContent += value.textContent)
+        return toString(p.textContent += value.textContent)
         } else {
             return
         }
     }
-    if(value.className == "operator" && p.textContent == "" || value.textContent == ")" && p.textContent == ("")) {
-         return
-     } else {
-         toString(para.textContent += value.textContent)
-     }
+}
+function checkIfHasNumber(){
+    if(p.textContent.substring(p.textContent.length - 1) == "0") return toString(p.textContent += "*(")
+    if(p.textContent.substring(p.textContent.length - 1) == "1") return toString(p.textContent += "*(")
+    if(p.textContent.substring(p.textContent.length - 1) == "2") return toString(p.textContent += "*(")
+    if(p.textContent.substring(p.textContent.length - 1) == "3") return toString(p.textContent += "*(")
+    if(p.textContent.substring(p.textContent.length - 1) == "4") return toString(p.textContent += "*(")
+    if(p.textContent.substring(p.textContent.length - 1) == "5") return toString(p.textContent += "*(")
+    if(p.textContent.substring(p.textContent.length - 1) == "6") return toString(p.textContent += "*(")
+    if(p.textContent.substring(p.textContent.length - 1) == "7") return toString(p.textContent += "*(")
+    if(p.textContent.substring(p.textContent.length - 1) == "8") return toString(p.textContent += "*(")
+    if(p.textContent.substring(p.textContent.length - 1) == "9") return toString(p.textContent += "*(")
+    if(p.textContent.substring(p.textContent.length - 1) == ")") return toString(p.textContent += "*(")
+    if(p.textContent.substring(p.textContent.length - 1) == "") return toString(p.textContent += "(")
+    if(p.textContent.substring(p.textContent.length - 1) == "-") return toString(p.textContent += "(")
+    if(p.textContent.substring(p.textContent.length - 1) == "+") return toString(p.textContent += "(")
+    if(p.textContent.substring(p.textContent.length - 1) == "*") return toString(p.textContent += "(")
+    if(p.textContent.substring(p.textContent.length - 1) == "/") return toString(p.textContent += "(")
+    if(p.textContent.substring(p.textContent.length - 1) == "%") return toString(p.textContent += "(")
 }
 
 function deleteChar(){
