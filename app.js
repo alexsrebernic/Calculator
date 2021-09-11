@@ -1,6 +1,9 @@
+import evaluate from "evaluator.js"
 
 const displayNumbers = document.querySelector("#showNumbers");
 const displayResult = document.querySelector("#result");
+const equationDisplay = document.querySelector("#equation")
+const equationResult = document.querySelector("#resultEquation")
 const p = document.getElementById("para")
 let span = document.getElementById("span")
 let pTextContent = p.textContent.length
@@ -12,7 +15,7 @@ const operators = document.querySelectorAll(".operator")
 const undo = document.querySelector("#undo")
 const escapeButton = document.querySelector("#escape")
 
-equal.onclick = () => console.log(p.textContent)
+equal.onclick = () => calculate()
 coma.onclick = () => displayCalculate(coma)
 undo.onclick = () =>  deleteChar()
 escapeButton.onclick = () => clearDisplayNumber()
@@ -39,27 +42,31 @@ function handleKeyboardInput(e) {
   }
 
 function displayCalculate(value){  
-    if(checkOperatorsParentesisDots(value)){
+    if(checkValues(value)){
         return
     } else {
         addChar(value)  
     }
 }
 
-function checkOperatorsParentesisDots(value){
+function checkValues(value){
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "+")  return true
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "-")  return true
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "*")  return true
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "/")  return true
      if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "%")  return true
-     if(value.className == "operator" && p.textContent.substring(p.textContent.length - 2) == "**")  return true
-     if(value.textContent == "**" && p.textContent.substring(p.textContent.length - 1) == "(")  return true
+     if(value.className == "operator" && p.textContent.substring(p.textContent.length - 1) == "^")  return true
+     if(value.textContent == "%" && p.textContent.substring(p.textContent.length - 1) == "(")  return true
+     if(value.textContent == "/" && p.textContent.substring(p.textContent.length - 1) == "(")  return true
+     if(value.textContent == "*" && p.textContent.substring(p.textContent.length - 1) == "(")  return true
+     if(value.textContent == "^" && p.textContent.substring(p.textContent.length - 1) == "(")  return true
      if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == "(")  return true  
      if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == "+")  return true    
      if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == "*")  return true   
      if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == "-")  return true   
      if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == "/")  return true   
      if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == "%")  return true    
+     if(value.textContent == ")" && p.textContent.substring(p.textContent.length - 1) == "^")  return true    
      if(value.textContent == "." && p.textContent.substring(p.textContent.length - 1) == ".")  return true    
 
 }
@@ -129,11 +136,8 @@ function deleteChar(){
 }
 
 function checkCharsOfString(){
-    if(p.textContent.substr(p.textContent.length - 2) === "**"){
-        p.textContent = p.textContent.slice(0,-2)
-        } else {
         p.textContent = p.textContent.slice(0,-1)
-        }
+        
 }
 function putLimitNumbers(){
     if(p.textContent.length >= 33){
@@ -145,4 +149,18 @@ function putLimitNumbers(){
 function clearDisplayNumber(){
     p.textContent = ""
    span.style.display = "none"
+}
+
+
+function calculate(){
+    let result = evaluate(p.textContent)
+    showEquation()
+    showResult(result)
+    clearDisplayNumber()
+}
+function showEquation(){
+    let equation = p.textContent;
+    let equationPara = document.createElement("p")
+    equationPara.textContent = equation
+    equationDisplay.appendChild(equationpara)
 }

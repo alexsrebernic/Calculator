@@ -1,11 +1,14 @@
-
-
 {
   "scripts": {
-    "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
-    "start": "http-server",
-    "webpack": "webpack"
-},
+    "build": "webpack",
+    "start-hot": "node server.js",
+    "start": "webpack-dev-server --content-base public/ --inline --port 3001"
+  },
+  "dependencies": {
+    "bigeval": "^3.1.0",
+    "evaluator.js": "^3.2.3",
+    "install": "^0.13.0"
+  },
   "devDependencies": {
     "webpack": "^5.52.1",
     "webpack-cli": "^4.8.0"

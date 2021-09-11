@@ -46,6 +46,17 @@ body {
                     align-items: flex-start;
                     width: 50%;
                 }
+                #equation{
+                    display: flex;
+                    flex-direction: column;
+                    p{
+                        width: 100%;
+                        height: 20%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
             }
             #showNumbers {
                 width: 100%;
