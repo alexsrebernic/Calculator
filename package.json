@@ -1,4 +1,11 @@
+
+
 {
+  "scripts": {
+    "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
+    "start": "http-server",
+    "webpack": "webpack"
+},
   "devDependencies": {
     "webpack": "^5.52.1",
     "webpack-cli": "^4.8.0"
