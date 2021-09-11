@@ -1,9 +1,5 @@
 import evaluate from "evaluator.js"
-
-const displayNumbers = document.querySelector("#showNumbers");
-const displayResult = document.querySelector("#result");
-const equationDisplay = document.querySelector("#equation")
-const equationResult = document.querySelector("#resultEquation")
+const resultDisplay = document.querySelector("#result");
 const p = document.getElementById("para")
 let span = document.getElementById("span")
 let pTextContent = p.textContent.length
@@ -140,6 +136,7 @@ function checkCharsOfString(){
         
 }
 function putLimitNumbers(){
+    span.textContent = "Limit reached!"
     if(p.textContent.length >= 33){
         span.style.display = "block"
     } else if (p.textContent.length < 33){
@@ -153,14 +150,51 @@ function clearDisplayNumber(){
 
 
 function calculate(){
+    try{
+        evaluate(p.textContent)
+    } catch(err){
+        span.style.display = "block"
+        span.textContent = err.message
+        return
+    }
     let result = evaluate(p.textContent)
-    showEquation()
-    showResult(result)
+    let div = document.createElement("div")
+    makeDiv(div)
+    showEquation(div)
+    showResult(div)
     clearDisplayNumber()
+    p.textContent += result
+    console.log(resultDisplay.childNodes.length)
+    if(resultDisplay.childNodes.length == 8){
+        resultDisplay.removeChild(resultDisplay.firstChild)
+    }
+    
 }
-function showEquation(){
+function makeDiv(div){
+    div.style.width = "100%"
+    div.style.height = "13%"
+    div.style.display = "flex"
+    div.style.flexDirection = "row"
+    div.style.justifyContent = "space-between"
+    div.style.alignItems = "center"
+    div.style.borderTop = "1px solid rgb(188, 184, 178)"
+    resultDisplay.appendChild(div)
+}
+function showEquation(div){
     let equation = p.textContent;
     let equationPara = document.createElement("p")
+    equationPara.style.fontSize = "14px"
+    equationPara.style.marginLeft = "20px"
+    equationPara.style.maxWidth = "180px"
+    equationPara.style.wordWrap = "break-word"
     equationPara.textContent = equation
-    equationDisplay.appendChild(equationpara)
+    div.appendChild(equationPara)
+}
+function showResult(div){
+    let result = evaluate(p.textContent)
+    let resultPara = document.createElement("p")
+    resultPara.style.fontSize = "14px"
+    resultPara.style.marginRight = "20px"
+    resultPara.textContent = "=     " + result
+    div.appendChild(resultPara)
 }
